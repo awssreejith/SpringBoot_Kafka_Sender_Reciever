@@ -1,0 +1,79 @@
+In this implementation we will have two services
+ - sender
+ - reciever
+ 
+* The sender will send two types on messages to reciever. The two types of messages are sent through two kafka topics
+
+* For a string message the topic used is  --> Sreejith_Topic_11
+* For an object type message [player object] the topic used is  --> Sreejith_Topic_22
+
+* The reciever listens to these two different topics and simply print the output
+
+* To send a message to first topic [string type message] issue the below command
+
+	curl -X PUT http://localhost:8090/sender/Astala_Vista_Baby2
+
+* To send a message to second topic [Player type message] issue the below command
+
+	curl -H "Content-Type: application/json" -X POST http://localhost:8090/sender/player -d "{\"name\":\"Virat Kohli\",\"country\":\"India\",\"age\":\"33\",\"isCaptain\":\"true\"}"
+
+====================================================================================================================================================================================
+Steps of implementation
+-----------------------
+
+0) Add the below dependencies in pom.xml file for both sender and reciever
+
+Note: verify the versions from maven central accordingly
+--------------------------------------------------------
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream</artifactId>
+			<version>3.1.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream-binder-kafka -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
+			<version>3.1.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream-test-support -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-test-support</artifactId>
+			<version>3.1.3</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+1) Add the Message interface class [MyMessagingInterface.java] with input or output channels for both sender and reciever
+[Refer MyMessagingInterface.java for further implementation]
+
+2) Add the binder class  [MyController.java] that binds to Message interface class for both sender and reciever
+[Refer MyController.java for further implementation]
+
+3) Create application.yml file for both sender and reciever and add the kafka related config values
+   [Refer the existing application.yml file for both sender and reciever]
+
+4) Start the kafka server [refer the below link for that]
+https://github.com/awssreejith/Install_And_Run_Kafka
+
+5) In two terminals start the sender and reciever
+
+* To send a message to first topic [string type message] issue the below command
+
+	curl -X PUT http://localhost:8090/sender/Astala_Vista_Baby2
+
+* To send a message to second topic [Player type message] issue the below command
+
+	curl -H "Content-Type: application/json" -X POST http://localhost:8090/sender/player -d "{\"name\":\"Virat Kohli\",\"country\":\"India\",\"age\":\"33\",\"isCaptain\":\"true\"}"
+
+
+7) For both the cases we can see the reciever printing the message/player details in to console
+
+Note: We need not create the topics explicitly in kafka server. If the topics are not available, then spring will create it
