@@ -5,7 +5,7 @@ This implementation shows how to use Spring cloud stream with Kafka for sending 
 In this implementation we will have two services
 
  - sender
- - 
+
  - reciever
  
 * The sender will send two types on messages to reciever. The two types of messages are sent through two kafka topics
@@ -23,3 +23,5 @@ In this implementation we will have two services
 * To send a message to second topic [Player type message] issue the below command
 
 	curl -H "Content-Type: application/json" -X POST http://localhost:8090/sender/player -d "{\"name\":\"Virat Kohli\",\"country\":\"India\",\"age\":\"33\",\"isCaptain\":\"true\"}"
+	
+Note: Please refer the Note file for further details
